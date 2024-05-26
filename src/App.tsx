@@ -1,15 +1,33 @@
-import { useState } from "react";
+import { useState, type ChangeEvent } from "react";
 import ProductCard from "./components/ProductCard";
 import ButtonComponent from "./components/ui/ButtonComponent";
 import Modal from "./components/ui/Modal";
 import { ProductList, formInputList } from "./data";
 import InputComponent from "./components/ui/InputComponent";
+import type { IProduct } from "./interfaces";
 function App() {
   // ---  States ---- //
   const [isOpen, setIsOpen] = useState(false);
+  // لازم نعرف التيبسكريبت الداتا هتكون نوعها اي
+  const [products, setProduct] = useState<IProduct>({
+    title: "",
+    description: "",
+    imageUrl: "",
+    price: "",
+    colors: [],
+    category: {
+      name: "",
+      imageUrl: "",
+    },
+  });
+
   // ---  States ---- //
 
   // ---  Handlers ---- //
+
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setProduct({ ...products, [e.target.name]: e.target.value });
+  };
 
   function openModal() {
     setIsOpen(true);
@@ -25,7 +43,13 @@ function App() {
       <label className="text-gray-700 font-medium" htmlFor={input.id}>
         {input.label}
       </label>
-      <InputComponent type={input.type} id={input.id} name={input.name} />
+      <InputComponent
+        onChange={onChangeHandler}
+        type={input.type}
+        id={input.id}
+        name={input.name}
+        // value={products[input.name]}
+      />
     </div>
   ));
   const renderList = ProductList.map((product) => (
@@ -49,7 +73,7 @@ function App() {
       </section>
 
       <Modal title="Add A new Product" isOpen={isOpen} closeModal={closeModal}>
-        <div className="space-y-2">
+        <form className="space-y-2">
           {renderFormInputList}
           <div className="flex items-center justify-between gap-2 mt-2">
             <ButtonComponent
@@ -65,7 +89,7 @@ function App() {
               Cancel
             </ButtonComponent>
           </div>
-        </div>
+        </form>
       </Modal>
     </main>
   );
