@@ -28,7 +28,7 @@ export interface IProduct {
 
 export interface IInputList {
   id: string;    
-  name: string;    
+  name: "title" | "description" | "price" | "imageUrl";    
   label: string;
   type: string;    
 }

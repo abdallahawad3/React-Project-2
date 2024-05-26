@@ -26,7 +26,9 @@ function App() {
   // ---  Handlers ---- //
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setProduct({ ...products, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setProduct({ ...products, [name]: value });
+    console.log(products);
   };
 
   function openModal() {
@@ -48,8 +50,7 @@ function App() {
         type={input.type}
         id={input.id}
         name={input.name}
-        // TODO This is error now fix it
-        // value={products[input.name]}
+        value={products[input.name]}
       />
     </div>
   ));
