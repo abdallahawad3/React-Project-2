@@ -1,15 +1,15 @@
-import { useState, type ChangeEvent } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import ProductCard from "./components/ProductCard";
 import ButtonComponent from "./components/ui/ButtonComponent";
 import Modal from "./components/ui/Modal";
 import { ProductList, formInputList } from "./data";
 import InputComponent from "./components/ui/InputComponent";
 import type { IProduct } from "./interfaces";
+import { productValidation } from "./validation";
+import ErrorMessage from "./components/ErrorMessage";
 function App() {
-  // ---  States ---- //
-  const [isOpen, setIsOpen] = useState(false);
-  // لازم نعرف التيبسكريبت الداتا هتكون نوعها اي
-  const [products, setProduct] = useState<IProduct>({
+  // Default State values
+  const defaultProduct = {
     title: "",
     description: "",
     imageUrl: "",
@@ -19,27 +19,57 @@ function App() {
       name: "",
       imageUrl: "",
     },
+  };
+
+  // ---  States ---- //
+  const [isOpen, setIsOpen] = useState(false);
+  // لازم نعرف التيبسكريبت الداتا هتكون نوعها اي
+  const [products, setProduct] = useState<IProduct>(defaultProduct);
+
+  const [errors, setErrors] = useState({
+    title: "",
+    description: "",
+    imageUrl: "",
+    price: "",
   });
 
   // ---  States ---- //
 
-  // ---  Handlers ---- //
+  //* ---  Handlers ---- *//
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
     setProduct({ ...products, [name]: value });
-    console.log(products);
+    setErrors({ ...errors, [name]: "" });
+  };
+
+  const onCancel = () => {
+    setProduct(defaultProduct);
+    setIsOpen(false);
+  };
+
+  const submitHandler = (e: FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+    const errors = productValidation(products);
+    const hasErrorMsg =
+      Object.values(errors).some((value) => value === "") &&
+      Object.values(errors).every((value) => value === "");
+
+    setErrors(errors);
+    if (!hasErrorMsg) {
+      return;
+    }
   };
 
   function openModal() {
     setIsOpen(true);
   }
 
-  function closeModal() {
+  const closeModal = (): void => {
     setIsOpen(false);
-  }
+  };
 
-  //  Rendering //
+  //* -----  Rendering ----- *//
   const renderFormInputList = formInputList.map((input) => (
     <div key={input.name} className="flex flex-col ">
       <label className="text-gray-700 font-medium" htmlFor={input.id}>
@@ -52,6 +82,7 @@ function App() {
         name={input.name}
         value={products[input.name]}
       />
+      <ErrorMessage msg={errors[input.name]} />
     </div>
   ));
   const renderList = ProductList.map((product) => (
@@ -75,7 +106,7 @@ function App() {
       </section>
 
       <Modal title="Add A new Product" isOpen={isOpen} closeModal={closeModal}>
-        <form className="space-y-2">
+        <form className="space-y-2" onSubmit={submitHandler}>
           {renderFormInputList}
           <div className="flex items-center justify-between gap-2 mt-2">
             <ButtonComponent
@@ -87,6 +118,7 @@ function App() {
             <ButtonComponent
               className="bg-gray-400 hover:bg-gray-500"
               width="w-full"
+              onClick={onCancel}
             >
               Cancel
             </ButtonComponent>

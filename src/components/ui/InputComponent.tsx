@@ -9,7 +9,7 @@ const InputComponent = ({ ...rest }: IProps) => {
   return (
     <input
       {...rest}
-      className="border-2 border-gray-300 p-2 my-2 rounded-md focus:outline-indigo-400 shadow-md text-md focus:ring-1 "
+      className="border-2 border-gray-300 p-2 rounded-md focus:outline-indigo-400 shadow-md text-md focus:ring-1 "
     />
   );
 };
