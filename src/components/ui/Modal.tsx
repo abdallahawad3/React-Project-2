@@ -1,10 +1,3 @@
-interface IProps {
-  title?: string;
-  open: boolean;
-  setOpen: (open: boolean) => void;
-  children: ReactNode;
-}
-
 import {
   Dialog,
   DialogPanel,
@@ -12,23 +5,26 @@ import {
   Transition,
   TransitionChild,
 } from "@headlessui/react";
-import type { ReactNode } from "react";
+import { ReactNode } from "react";
+interface IProps {
+  title: string;
+  isOpen: boolean;
+  closeModal: () => void;
+  children: ReactNode;
+}
 
-const Modal = ({ open, setOpen, title, children }: IProps) => {
-  const handelModal = () => {
-    setOpen(!open);
-  };
+const Modal = ({ closeModal, isOpen, title, children }: IProps) => {
   return (
     <>
-      <Transition appear show={open}>
+      <Transition appear show={isOpen}>
         <Dialog
           as="div"
-          className="relative z-10 focus:outline-none"
-          onClose={handelModal}
+          className="relative z-10 focus:outline-none "
+          onClose={closeModal}
           __demoMode
         >
-          <div className="fixed inset-0 z-10 w-screen overflow-y-auto ">
-            <div className="flex min-h-full items-center justify-center p-4">
+          <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-gray-700/95">
+            <div className="flex min-h-full items-center justify-center p-4 ">
               <TransitionChild
                 enter="ease-out duration-300"
                 enterFrom="opacity-0 transform-[scale(95%)]"
@@ -37,19 +33,15 @@ const Modal = ({ open, setOpen, title, children }: IProps) => {
                 leaveFrom="opacity-100 transform-[scale(100%)]"
                 leaveTo="opacity-0 transform-[scale(95%)]"
               >
-                <DialogPanel className="w-full max-w-md rounded-xl bg-white p-6 backdrop-blur-2xl">
+                <DialogPanel className="w-full max-w-md rounded-xl shadow-2xl bg-white p-6 ">
                   {title && (
                     <DialogTitle
                       as="h3"
-                      className="text-base/7 font-medium text-white"
+                      className="text-base/7 font-medium text-zinc-800 uppercase "
                     >
                       {title}
                     </DialogTitle>
                   )}
-                  <p className="mt-2 text-sm/6">
-                    Your payment has been successfully submitted. We’ve sent you
-                    an email with all of the details of your order.
-                  </p>
                   <div className="mt-4">{children}</div>
                 </DialogPanel>
               </TransitionChild>

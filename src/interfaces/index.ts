@@ -3,7 +3,7 @@ import type { ButtonHTMLAttributes, ReactNode } from "react";
 export interface IImage {
   imageURL: string;
   altText: string;
-  className: string;
+  className?: string;
 }
 //* - To Work with all Attributes that assign to element
 export interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -23,4 +23,12 @@ export interface IProduct {
     name: string;
     imageUrl:string;
   };
+}
+
+
+export interface IInputList {
+  id: string;    
+  name: string;    
+  label: string;
+  type: string;    
 }
