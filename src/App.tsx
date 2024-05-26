@@ -48,6 +48,7 @@ function App() {
         type={input.type}
         id={input.id}
         name={input.name}
+        // TODO This is error now fix it
         // value={products[input.name]}
       />
     </div>
