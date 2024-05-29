@@ -34,7 +34,7 @@ interface IProps {
 export const productValidation = ({...product}: IProps) => {
   // ** Return an object with the validation results */
 
-  const imageRegex = /\b(?:https?|ftp|file):\/\/\S+\.(?:png|jpg|jpeg|gif|bmp|tiff|svg)\b/i;
+  const imageRegex = /\b(?:https?|ftp|file):\/\/\S/;
   const valid = imageRegex.test(product.imageUrl);
 
   const errors: IProps = {description:"",imageUrl:"",price:"",title:""};
