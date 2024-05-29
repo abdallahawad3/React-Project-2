@@ -86,7 +86,7 @@ export const ProductList: IProduct[] = [
     imageUrl:
       "https://picsum.photos/id/65/367/267",
     price: "205",
-    colors: ["#070F2B", "#1B1A55", "#1B1A55"],
+    colors: ["#070F2B", "#1B1A55", "#88re27"],
     category: {
       name: "t-shirt",
       imageUrl:
@@ -170,3 +170,20 @@ export const formInputList:IInputList[] = [
   },
   
 ]
+
+
+export const colors = [
+  "#A855F7",
+  "#2563EB",
+  "#84D2C5",
+  "#13005A",
+  "#FF6E31",
+  "#3C2A21",
+  "#6C4AB6",
+  "#CB1C8D",
+  "#000000",
+  "#645CBB",
+  "#1F8A70",
+  "#820000",
+  "#FF0032",
+] 
