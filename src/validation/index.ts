@@ -2,7 +2,7 @@
  * @typedef {Object} IProps
  * @property {string} title - The title of the product.
  * @property {string} description - The description of the product.
- * @property {string} imageUrl - The URL of the product's image.
+ * @property {string} imageURL - The URL of the product's image.
  * @property {string} price - The price of the product.
  */
 
@@ -16,7 +16,7 @@
  * const product = {
  *   title: "Example Product",
  *   description: "This is an example product.",
- *   imageUrl: "http://example.com/image.jpg",
+ *   imageURL: "http://example.com/image.jpg",
  *   price: "19.99"
  * };
  * const validationErrors = productValidation(product);
@@ -26,7 +26,7 @@
 interface IProps {
   title: string;
   description: string;
-  imageUrl: string;
+  imageURL: string;
   price: string;
 }
 
@@ -35,9 +35,9 @@ export const productValidation = ({...product}: IProps) => {
   // ** Return an object with the validation results */
 
   const imageRegex = /\b(?:https?|ftp|file):\/\/\S/;
-  const valid = imageRegex.test(product.imageUrl);
+  const valid = imageRegex.test(product.imageURL);
 
-  const errors: IProps = {description:"",imageUrl:"",price:"",title:""};
+  const errors: IProps = {description:"",imageURL:"",price:"",title:""};
 
   if(!product.title.trim() || product.title.length < 10 || product.title.length > 80){
     errors.title = "Title must be between 10 and 80 characters";
@@ -47,8 +47,8 @@ export const productValidation = ({...product}: IProps) => {
     errors.description = "Description must be between 10 and 200 characters";
   }
 
-  if(!valid || !product.imageUrl.trim()){
-    errors.imageUrl = "Invalid image url";
+  if(!valid || !product.imageURL.trim()){
+    errors.imageURL = "Invalid image url";
   }
 
   if(!product.price.trim() || isNaN(Number(product.price))){

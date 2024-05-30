@@ -1,4 +1,5 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { TProductNames } from "../types";
 
 export interface IImage {
   imageURL: string;
@@ -16,19 +17,25 @@ export interface IProduct {
   id?: string | undefined;
   title: string;
   description: string;
-  imageUrl: string;
+  imageURL: string;
   price: string;
   colors: string[];
   category: {
     name: string;
-    imageUrl:string;
+    imageURL:string;
   };
 }
 
 
 export interface IInputList {
   id: string;    
-  name: "title" | "description" | "price" | "imageUrl";    
+  name: TProductNames;    
   label: string;
   type: string;    
+}
+
+export interface ICategory {
+  id: string;
+  name: string;
+  imageURL: string;
 }
